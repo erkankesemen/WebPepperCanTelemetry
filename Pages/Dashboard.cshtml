@@ -1,0 +1,147 @@
+@page
+@model DashboardModel
+@namespace WebPepperCan.Pages
+@using Microsoft.Extensions.DependencyInjection
+@using Microsoft.AspNetCore.Identity
+@using WebPepperCan.Data
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<!-- Ana navigasyon sidebar'ı -->
+<partial name="_NavigationPartial" />
+
+<div class="flex overflow-hidden bg-gray-100" style="height: calc(100vh - 64px); ">
+    <!-- Fleets sidebar'ı -->
+    <partial name="/Pages/Shared/FleetListPartial/_FleetListPartial.cshtml" model='new FleetListPartialModel(
+        HttpContext.RequestServices.GetRequiredService<ApplicationDbContext>(),
+        HttpContext.RequestServices.GetRequiredService<UserManager<ApplicationUser>>()
+    )' />
+
+    <!-- Ana içerik -->
+    <div class="flex-1 flex flex-col p-4 overflow-auto">
+        <!-- Görünüm seçme butonları -->
+        <div class="flex gap-2 justify-end mb-4">
+            <button
+                onclick="setView('map')"
+                class="px-4 py-2 rounded-lg view-button bg-blue-600 text-white"
+                data-view="map">
+                Map
+            </button>
+            <button
+                onclick="setView('vehicles')"
+                class="px-4 py-2 rounded-lg view-button bg-white text-gray-600 hover:bg-gray-100"
+                data-view="vehicles">
+                Vehicles
+            </button>
+        </div>
+
+        <!-- Üst kısımdaki metrikler -->
+        <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-8 gap-2 md:gap-4 mb-4">
+            @foreach (var stat in Model.VehicleStats)
+            {
+                <div class="bg-white p-2 md:p-4 rounded-lg shadow cursor-pointer hover:bg-gray-100 hover:shadow-lg transition-all">
+                    <h3 class="text-xs md:text-sm text-gray-500 mb-1 md:mb-2 truncate">@stat.Key</h3>
+                    <p class="text-sm md:text-lg font-semibold truncate @(stat.Key.Contains("Active") && !stat.Value.StartsWith("0") ? "text-green-600" : 
+                        stat.Key.Contains("Inactive") && !stat.Value.StartsWith("0") ? "text-red-600" : "")">
+                        @stat.Value
+                    </p>
+                </div>
+            }
+        </div>
+
+        <!-- Ana içerik alanı -->
+        <div class="flex-1 bg-white rounded-lg shadow overflow-hidden">
+            <div id="mapView" class="h-full relative">
+               
+                <div id="map" class="h-full w-full"></div>
+            </div>
+
+            <div id="vehiclesView" class="h-full overflow-auto hidden">
+                <div class="p-4">
+                    <div class="flex items-center justify-between mb-4">
+                        <div class="flex items-center space-x-2">
+                            <input
+                                type="text"
+                                placeholder="Search"
+                                class="px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            />
+                            <button class="px-4 py-2 text-gray-600 bg-white border rounded-lg hover:bg-gray-100">
+                                Export
+                            </button>
+                            <button class="px-4 py-2 text-gray-600 bg-white border rounded-lg hover:bg-gray-100">
+                                Scan QR code
+                            </button>
+                        </div>
+                    </div>
+
+                    <table class="w-full">
+                        <thead>
+                            <tr class="text-left border-b">
+                                <th class="pb-2">Vehicle</th>
+                                <th class="pb-2">Last active</th>
+                                <th class="pb-2">Name</th>
+                                <th class="pb-2">Speed</th>
+                                <th class="pb-2">Mileage</th>
+                                <th class="pb-2">Fuel Used</th>
+                                <th class="pb-2">Propulsion</th>
+                                <th class="pb-2">Coolant</th>
+                                <th class="pb-2">Fuel Level</th>
+                                <th class="pb-2">SoC</th>
+                                <th class="pb-2">Charge Type</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var vehicle in Model.Vehicles)
+                            {
+                                <tr class="hover:bg-gray-50" data-vehicle-id="@vehicle.Id">
+                                    <td class="py-3">
+                                        <div class="flex items-center gap-3">
+                                            <div class="w-8 h-8 bg-gray-200 rounded-full flex items-center justify-center">
+                                                <img src="/images/bus-inactive.png" 
+                                                     class="w-5 h-5" alt="Bus Icon">
+                                            </div>
+                                            <span class="font-medium">@vehicle.Plaka / @vehicle.TelemetryDevice?.SerialNumber</span>
+                                        </div>
+                                    </td>
+                                    <td class="py-3">@vehicle.LastActive</td>
+                                    <td class="py-3">Speed verisi gelecek</td>
+                                    <td class="py-3">Mileage verisi gelecek</td>
+                                    <td class="py-3">FuelUsed verisi gelecek</td>
+                                    <td class="py-3">Propulsion verisi gelecek</td>
+                                    <td class="py-3">Coolant verisi gelecek</td>
+                                    <td class="py-3">FuelLevel verisi gelecek</td>
+                                    <td class="py-3">SoC verisi gelecek</td>
+                                    <td class="py-3">ChargeType verisi gelecek</td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="~/lib/microsoft/signalr/dist/browser/signalr.js"></script>
+    
+    <!-- Veri tanımlamaları -->
+    <script>
+        var dashboardVehicles = @Html.Raw(Json.Serialize(Model.Vehicles.Select(v => new
+        {
+            id = v.Id,
+            plaka = v.Plaka,
+            deviceId = v.TelemetryDevice?.SerialNumber,
+            lastActive = v.LastActive,
+            isActive = v.AktifMi,
+            latitude = 39.793629,
+            longitude = 32.432211
+        })));
+    </script>
+    
+    <!-- Sadece dashboard.js'i yükle -->
+    <script src="~/js/dashboard.js"></script>
+} 

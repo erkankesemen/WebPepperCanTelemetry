@@ -1,0 +1,274 @@
+@using WebPepperCan.Data
+@using Microsoft.EntityFrameworkCore
+@using WebPepperCan.Services
+@using WebPepperCan.Pages.Admin
+@using WebPepperCan.Models.ViewModels
+@inject ApplicationDbContext Context
+@inject IOrganizationService OrganizationService
+@{
+    var organizations = await OrganizationService.GetAllAsync();
+    var vehicles = Context.Vehicles.Include(v => v.TelemetryDevice).ToList();
+}
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - WebPepperCan</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/WebPepperCan.styles.css" asp-append-version="true" />
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    @Html.AntiForgeryToken()
+    <!-- JavaScript - Head -->
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <!-- CSS -->
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="bg-gray-100">
+    <div class="flex h-screen">
+        <!-- Sol Menü -->
+        <div class="w-64 bg-white shadow-sm">
+            <div class="p-4">
+                <div class="flex items-center space-x-2 text-xl font-semibold text-indigo-600 mb-8">
+                    <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6V4m0 2a2 2 0 100 4m0-4a2 2 0 110 4m-6 8a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4m6 6v10m6-2a2 2 0 100-4m0 4a2 2 0 110-4m0 4v2m0-6V4" />
+                    </svg>
+                    <span>Admin Panel</span>
+                </div>
+
+                    <!-- Dashboard -->
+                <nav class="space-y-1">
+                     <div class="mb-4">
+                    <a href="/admin" 
+                       class="w-full flex items-center p-2 text-sm font-medium text-gray-900 rounded-md hover:bg-gray-50 focus:outline-none no-underline">
+                        <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                  d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                        </svg>
+                        <span class="ml-3">Dashboard</span>
+                    </a>
+               </div>
+                    <div class="mb-4">
+                        <button onclick="toggleDropdown('userManagement')" 
+                                class="w-full flex items-center justify-between p-2 text-sm font-medium text-gray-900 rounded-md hover:bg-gray-50 focus:outline-none">
+                            <div class="flex items-center">
+                                <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4.354a4 4 0 110 5.292M15 21H3v-1a6 6 0 0112 0v1zm0 0h6v-1a6 6 0 00-9-5.197M13 7a4 4 0 11-8 0 4 4 0 018 0z" />
+                                </svg>
+                                <span class="ml-3">Kullanıcı Yönetimi</span>
+                            </div>
+                            <svg class="w-4 h-4 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </button>
+                        <div id="userManagement" class="hidden ml-8 mt-2 space-y-1">
+                            <a href="/Admin/UserManagement" class="block px-3 py-2 text-sm text-gray-600 hover:bg-gray-50 hover:text-gray-900 rounded-md no-underline">
+                                <div class="flex items-center">
+                                    <span>Kullanıcı Listesi</span>
+                                </div>
+                            </a>
+                            <a href="#" onclick="window.services.modal.open('newUserModal')" class="block px-3 py-2 text-sm text-gray-600 hover:bg-gray-50 hover:text-gray-900 rounded-md no-underline">
+                                Yeni Kullanıcı Ekle
+                            </a>
+                             
+                        </div>
+                    </div>
+
+                    <!-- Kurum Yönetimi -->
+                    <div class="mb-4">
+                        <button onclick="toggleDropdown('orgManagement')" 
+                                class="w-full flex items-center justify-between p-2 text-sm font-medium text-gray-900 rounded-md hover:bg-gray-50 focus:outline-none">
+                            <div class="flex items-center">
+                                <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4" />
+                                </svg>
+                                <span class="ml-3 text-left">Organizasyon Yönetimi</span>
+                            </div>
+                            <svg class="w-4 h-4 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </button>
+                        <div id="orgManagement" class="hidden ml-8 mt-2 space-y-1">
+                            <a href="/Admin/OrganizationManagement" class="block px-3 py-2 text-sm text-gray-600 hover:bg-gray-50 hover:text-gray-900 no-underline rounded-md">
+                                <div class="flex items-center">
+                                    <span>Organizasyon Listesi</span>
+                                </div>
+                            </a>
+
+                       
+                         <button onclick="window.services.modal.open('newOrganizationModal')" 
+                                class="block px-3 py-2 text-sm text-gray-600 hover:bg-gray-50 hover:text-gray-900 rounded-md">
+                            Kurum Ekle
+                        </button>
+                        </div>
+                    </div>
+
+                    <!-- Araç Yönetimi -->
+                    <div class="mb-4">
+                        <button onclick="toggleDropdown('vehicleManagement')"
+                                class="w-full flex items-center justify-between p-2 text-sm font-medium text-gray-900 rounded-md hover:bg-gray-50 focus:outline-none">
+                            <div class="flex items-center">
+                                <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                          d="M9 17a2 2 0 11-4 0 2 2 0 014 0zM19 17a2 2 0 11-4 0 2 2 0 014 0z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                                          d="M13 16V6a1 1 0 00-1-1H4a1 1 0 00-1 1v10a1 1 0 001 1h1m8-1a1 1 0 01-1 1H9m4-1V8a1 1 0 011-1h2.586a1 1 0 01.707.293l3.414 3.414a1 1 0 01.293.707V16a1 1 0 01-1 1h-1m-6-1a1 1 0 001 1h1M5 17a2 2 0 104 0m-4 0a2 2 0 114 0m6 0a2 2 0 104 0m-4 0a2 2 0 114 0" />
+                                </svg>
+                                <span class="ml-3">Araç Yönetimi</span>
+                            </div>
+                            <svg class="w-4 h-4 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </button>
+                        <div id="vehicleManagement" class="hidden ml-8 mt-2 space-y-1">
+                            <a asp-page="/Admin/VehicleManagement" class="block px-3 py-2 text-sm text-gray-600 hover:bg-gray-50 hover:text-gray-900 rounded-md  no-underline">
+                                <div class="flex items-center">
+                                    <span>Araç Listesi</span>
+                                </div>
+                            </a>
+                            <button onclick="window.services.modal.open('newVehicleModal')" 
+                                    class="w-full text-left px-3 py-2 text-sm text-gray-600 hover:bg-gray-50 hover:text-gray-900 rounded-md">
+                                Yeni Araç Ekle
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Telemetri Cihazı Modal -->
+                    <div class="mb-4">
+                        <button onclick="toggleDropdown('telemetryManagement')"
+                                class="w-full flex items-center justify-between p-2 text-sm font-medium text-gray-900 rounded-md hover:bg-gray-50 focus:outline-none">
+                            <div class="flex items-center">
+                                <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 3v2m6-2v2M9 19v2m6-2v2M5 9H3m2 6H3m18-6h-2m2 6h-2M7 19h10a2 2 0 002-2V7a2 2 0 00-2-2H7a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                                </svg>
+                                <span class="ml-3 text-left">Telemetri Cihaz Yönetimi</span>
+                            </div>
+                            <svg class="w-4 h-4 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </button>
+                        <div id="telemetryManagement" class="hidden ml-8 mt-2 space-y-1">
+                            <a href="/Admin/TelemetryDevices" class="block px-3 py-2 text-sm text-gray-600 hover:bg-gray-50 hover:text-gray-900 rounded-md no-underline">
+                                <div class="flex items-center">
+                                    <span>Telemetri Cihaz Listesi</span>
+                                </div>
+                            </a>
+                            <button onclick="window.services.modal.open('newTelemetryDeviceModal')"  class="w-full text-left px-3 py-2 text-sm text-gray-600 hover:bg-gray-50 hover:text-gray-900 rounded-md">
+                                Yeni Cihaz Ekle
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Sistem Ayarları -->
+                    <div class="mb-4">
+                        <button onclick="toggleDropdown('systemSettings')"
+                                class="w-full flex items-center justify-between p-2 text-sm font-medium text-gray-900 rounded-md hover:bg-gray-50 focus:outline-none">
+                            <div class="flex items-center">
+                                <svg class="w-5 h-5 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
+                                </svg>
+                                <span class="ml-3">Sistem Ayarları</span>
+                            </div>
+                            <svg class="w-4 h-4 transition-transform duration-200" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+                            </svg>
+                        </button>
+                        <div id="systemSettings" class="hidden ml-8 mt-2 space-y-1">
+                            <a href="/Admin/Settings" class="block px-3 py-2 text-sm text-gray-600 hover:bg-gray-50 hover:text-gray-900 rounded-md">Genel Ayarlar</a>
+                            <a href="/Admin/Logs" class="block px-3 py-2 text-sm text-gray-600 hover:bg-gray-50 hover:text-gray-900 rounded-md">Sistem Logları</a>
+                        </div>
+                    </div>
+                </nav>
+            </div>
+        </div>
+
+        <!-- Ana İçerik -->
+        <div class="flex-1 overflow-auto">
+            <main role="main">
+                @RenderBody()
+            </main>
+        </div>
+    </div>
+
+ <!-- Organizasyon Modalları -->
+        <partial name="_OrganizationModalPartial" model="@(new OrganizationModalViewModel { 
+            IsEdit = false,
+            Organization = new Organization { AktifMi = true }
+        })" />
+
+        <partial name="_OrganizationModalPartial" model="@(new OrganizationModalViewModel { 
+            IsEdit = true,
+            Organization = null
+        })" />
+
+    <!-- Kullanıcı Modalları -->
+    <partial name="_UserModalPartial" model="@(new UserModalViewModel { 
+        ModalId = "userModal",
+        FormId = "userForm",
+        Title = "Yeni Kullanıcı",
+        SubmitButtonText = "Kaydet",
+        IsEdit = false,
+        Organizations = organizations,
+        User = null
+    })" />
+
+    <partial name="_UserModalPartial" model="@(new UserModalViewModel { 
+        ModalId = "editUserModal",
+        FormId = "editUserForm",
+        Title = "Kullanıcı Düzenle",
+        SubmitButtonText = "Güncelle",
+        IsEdit = true,
+        Organizations = organizations,
+        User = null
+    })" />
+
+    <!-- Telemetri Cihazı Modal -->
+    <partial name="_TelemetryDeviceModalPartial" model="new TelemetryDeviceModalViewModel { 
+        Vehicles = vehicles, 
+        Organizations = organizations 
+    }" />
+
+    <!-- Araç Modal -->
+    <partial name="_VehicleModalPartial" model="new VehicleModalViewModel { 
+        Organizations = organizations 
+    }" />
+
+    <!-- JavaScript - Body End -->
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/services.js" asp-append-version="true"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/admin.js" asp-append-version="true"></script>
+
+    @await RenderSectionAsync("Scripts", required: false)
+
+    <!-- Toast mesajları için script'ler -->
+    @if (TempData["SuccessMessage"] != null)
+    {
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                window.services.ui.showToast('success', '@TempData["SuccessMessage"]');
+            });
+        </script>
+    }
+
+    @if (TempData["ErrorMessage"] != null)
+    {
+        <script>
+            document.addEventListener('DOMContentLoaded', function() {
+                window.services.ui.showToast('error', '@TempData["ErrorMessage"]');
+            });
+        </script>
+    }
+</body>
+</html>

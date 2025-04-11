@@ -1,0 +1,99 @@
+@model VehicleModalViewModel
+
+<div id="@(Model.IsEdit ? "editVehicleModal" : "newVehicleModal")"
+    class="hidden fixed inset-0 bg-black bg-opacity-50 overflow-y-auto h-full w-full z-50">
+    <div class="relative top-20 mx-auto p-8 w-[500px] max-w-xl bg-white rounded-xl shadow-2xl transform transition-all">
+        <div class="flex justify-between items-center mb-6">
+            <h3 class="text-xl font-semibold text-gray-900">@(Model.IsEdit ? "Araç Düzenle" : "Yeni Araç")</h3>
+            <button type="button" data-modal-close="@(Model.IsEdit ? "editVehicleModal" : "newVehicleModal")"
+                class="text-gray-400 hover:text-gray-500">
+                <span class="sr-only">Kapat</span>
+                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+        </div>
+
+        <form method="post" 
+                id="@(Model.IsEdit ? "editVehicleForm" : "newVehicleForm")"
+                onsubmit="return window.vehicleOperations.submitForm(event)"
+                class="space-y-6">
+            @Html.AntiForgeryToken()
+            <input type="hidden" name="Id" value="@Model.Vehicle?.Id">
+            <input type="hidden" name="AktifMi" value="@((Model.Vehicle?.AktifMi ?? true).ToString().ToLower())">
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+                <div>
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="editPlaka">Plaka</label>
+                    <input type="text" id="editPlaka" name="Plaka" required maxlength="20" value="@Model.Vehicle?.Plaka"
+                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                </div>
+                <div>
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="editSase">Şase No</label>
+                    <input type="text" id="editSase" name="Sase" required maxlength="50" value="@Model.Vehicle?.Sase"
+                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                </div>
+                <div>
+                    <label class="block text-gray-700 text-sm font-bold mb-2" for="editLocation">Konum</label>
+                    <input type="text" id="editLocation" name="Location" maxlength="200"
+                        value="@Model.Vehicle?.Location"
+                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                </div>
+                <div>
+                    <label class="block text-gray-700 text-sm font-bold mb-2"
+                        for="editVehicleOrganizationId">Organizasyon</label>
+                    <select id="editVehicleOrganizationId" name="OrganizationId" required
+                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                        <option value="">Seçiniz...</option>
+                        @foreach (var org in Model.Organizations)
+                        {
+                            <option value="@org.Id" selected="@(Model.Vehicle?.OrganizationId == org.Id)">
+                                @org.KurumAdi
+                            </option>
+                        }
+                    </select>
+                </div>
+                  <div class="sm:col-span-2">
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Durum</label>
+                    <div class="flex items-center">
+                        <button type="button"
+                            class="toggle-button relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 @(Model.Vehicle?.AktifMi ?? true ? "bg-blue-600" : "bg-gray-200")">
+                            <span class="sr-only">Durum değiştir</span>
+                            <span
+                                class="dot pointer-events-none relative inline-flex h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out @(Model.Vehicle?.AktifMi ?? true ? "translate-x-5" : "translate-x-0")">
+                     
+                                <span
+                                    class="absolute inset-0 flex items-center justify-center transition-opacity duration-200 ease-in-out"
+                                    style="opacity: @(Model.Vehicle?.AktifMi ?? true ? "1" : "0")">
+                                    <i class="fas fa-check text-blue-600 text-xs"></i>
+                                </span>
+                   
+                                <span
+                                    class="absolute inset-0 flex items-center justify-center transition-opacity duration-200 ease-in-out"
+                                    style="opacity: @(Model.Vehicle?.AktifMi ?? true ? "0" : "1")">
+                                    <i class="fas fa-times text-gray-400 text-xs"></i>
+                                </span>
+                            </span>
+                        </button>
+                        <input type="hidden" name="AktifMi"
+                            value="@((Model.Vehicle?.AktifMi ?? true).ToString().ToLower())" />
+                        <span class="status-text ml-3 text-sm font-medium text-gray-900">
+                            @(Model.Vehicle?.AktifMi ?? true ? "Aktif" : "Pasif")
+                        </span>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="flex justify-end space-x-3 mt-6">
+                <button type="button" data-modal-close="@(Model.IsEdit ? "editVehicleModal" : "newVehicleModal")"
+                    class="px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300">
+                    İptal
+                </button>
+                <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700">
+                    @(Model.IsEdit ? "Güncelle" : "Kaydet")
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

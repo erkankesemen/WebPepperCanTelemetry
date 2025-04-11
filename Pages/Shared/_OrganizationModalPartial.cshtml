@@ -1,0 +1,99 @@
+@using WebPepperCan.Pages.Admin
+@model OrganizationModalViewModel
+
+<div id="@(Model.IsEdit ? "editOrganizationModal" : "newOrganizationModal")"
+    class="hidden fixed inset-0 bg-black bg-opacity-50 overflow-y-auto h-full w-full z-50">
+    <div class="relative top-20 mx-auto p-8 w-[500px] max-w-xl bg-white rounded-xl shadow-2xl transform transition-all">
+        <div class="flex justify-between items-center mb-6">
+            <h3 class="text-xl font-semibold text-gray-900">@(Model.IsEdit ? "Kurum Düzenle" : "Yeni Kurum Ekle")</h3>
+            <button type="button" data-modal-close="@(Model.IsEdit ? "editOrganizationModal" : "newOrganizationModal")"
+                class="text-gray-400 hover:text-gray-500">
+                <span class="sr-only">Kapat</span>
+                <svg class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                </svg>
+            </button>
+        </div>
+
+        <form method="post" id="@(Model.IsEdit ? "editOrganizationForm" : "newOrganizationForm")"
+            onsubmit="return window.organizationOperations.submitForm(event)" class="space-y-6">
+            @Html.AntiForgeryToken()
+            <input type="hidden" name="Id" value="@Model.Organization?.Id">
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                <div>
+                    <label for="editOrganizationKurumAdi" class="block text-sm font-medium text-gray-700 mb-1">Kurum
+                        Adı</label>
+                    <input type="text" id="@(Model.IsEdit ? "editOrganizationKurumAdi" : "newOrganizationKurumAdi")"
+                        name="KurumAdi" required value="@Model.Organization?.KurumAdi"
+                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                </div>
+                <div>
+                    <label for="editOrgTel" class="block text-sm font-medium text-gray-700 mb-1">Telefon</label>
+                    <input type="tel" id="@(Model.IsEdit ? "editOrgTel" : "newOrgTel")" name="Tel" required
+                        value="@Model.Organization?.Tel"
+                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                </div>
+                <div>
+                    <label for="editOrgEmail" class="block text-sm font-medium text-gray-700 mb-1">Email</label>
+                    <input type="email" id="@(Model.IsEdit ? "editOrgEmail" : "newOrgEmail")" name="Email" required
+                        value="@Model.Organization?.Email"
+                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                </div>
+                <div>
+                    <label for="editOrgIlgiliKisi" class="block text-sm font-medium text-gray-700 mb-1">İlgili
+                        Kişi</label>
+                    <input type="text" id="@(Model.IsEdit ? "editOrgIlgiliKisi" : "newOrgIlgiliKisi")" name="IlgiliKisi"
+                        required value="@Model.Organization?.IlgiliKisi"
+                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">
+                </div>
+                <div class="sm:col-span-2">
+                    <label for="editOrgAdres" class="block text-sm font-medium text-gray-700 mb-1">Adres</label>
+                    <textarea id="@(Model.IsEdit ? "editOrgAdres" : "newOrgAdres")" name="Adres" required rows="3"
+                        class="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline">@Model.Organization?.Adres</textarea>
+                </div>
+              
+                <div class="sm:col-span-2">
+                    <label class="block text-sm font-medium text-gray-700 mb-1">Durum</label>
+                    <div class="flex items-center">
+                        <button type="button"
+                            class="toggle-button relative inline-flex h-6 w-11 flex-shrink-0 cursor-pointer rounded-full border-2 border-transparent transition-colors duration-200 ease-in-out focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2 @(Model.Organization?.AktifMi ?? true ? "bg-blue-600" : "bg-gray-200")">
+                            <span class="sr-only">Durum değiştir</span>
+                            <span
+                                class="dot pointer-events-none relative inline-flex h-5 w-5 transform rounded-full bg-white shadow ring-0 transition duration-200 ease-in-out @(Model.Organization?.AktifMi ?? true ? "translate-x-5" : "translate-x-0")">
+                     
+                                <span
+                                    class="absolute inset-0 flex items-center justify-center transition-opacity duration-200 ease-in-out"
+                                    style="opacity: @(Model.Organization?.AktifMi ?? true ? "1" : "0")">
+                                    <i class="fas fa-check text-blue-600 text-xs"></i>
+                                </span>
+                   
+                                <span
+                                    class="absolute inset-0 flex items-center justify-center transition-opacity duration-200 ease-in-out"
+                                    style="opacity: @(Model.Organization?.AktifMi ?? true ? "0" : "1")">
+                                    <i class="fas fa-times text-gray-400 text-xs"></i>
+                                </span>
+                            </span>
+                        </button>
+                        <input type="hidden" name="AktifMi"
+                            value="@((Model.Organization?.AktifMi ?? true).ToString().ToLower())" />
+                        <span class="status-text ml-3 text-sm font-medium text-gray-900">
+                            @(Model.Organization?.AktifMi ?? true ? "Aktif" : "Pasif")
+                        </span>
+                    </div>
+                </div>
+            </div>
+            <div class="flex justify-end space-x-3 mt-6">
+                <button type="button"
+                    data-modal-close="@(Model.IsEdit ? "editOrganizationModal" : "newOrganizationModal")"
+                    class="px-4 py-2 bg-gray-200 text-gray-800 rounded hover:bg-gray-300">
+                    İptal
+                </button>
+                <button type="submit"
+                    class="px-4 py-2 bg-blue-500 text-white rounded hover:bg-blue-600 focus:outline-none focus:ring-2 focus:ring-blue-500">
+                    Kaydet
+                </button>
+            </div>
+        </form>
+    </div>
+</div>

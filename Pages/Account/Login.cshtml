@@ -1,0 +1,147 @@
+@page
+@model WebPepperCan.Pages.Account.LoginModel
+@{
+    ViewData["Title"] = "Login";
+    Layout = null;
+}
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - WebPepperCan</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        html, body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+
+        .tesla-animation {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .tesla-spark {
+            position: absolute;
+            background: linear-gradient(to right, #4f46e5, #818cf8);
+            border-radius: 50%;
+            filter: blur(5px);
+            animation: spark 2s infinite;
+            opacity: 0;
+        }
+
+        @@keyframes spark {
+            0% {
+                transform: scale(0);
+                opacity: 0;
+            }
+            50% {
+                opacity: 0.8;
+            }
+            100% {
+                transform: scale(3);
+                opacity: 0;
+            }
+        }
+
+        .form-container {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .input-field {
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .input-field:focus {
+            background: rgba(255, 255, 255, 0.1);
+            border-color: #4f46e5;
+            box-shadow: 0 0 15px rgba(79, 70, 229, 0.3);
+        }
+
+        .login-button {
+            background: linear-gradient(45deg, #4f46e5, #818cf8);
+            transition: all 0.3s ease;
+        }
+
+        .login-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(79, 70, 229, 0.4);
+        }
+    </style>
+</head>
+<body class="min-h-screen bg-gradient-to-br from-gray-900 to-indigo-900 flex items-center justify-center p-4">
+    <div class="tesla-animation" id="teslaContainer"></div>
+
+    <div class="form-container w-full max-w-md p-8 rounded-2xl shadow-2xl z-10">
+        <div class="text-center mb-8">
+            <h1 class="text-3xl font-bold text-white mb-2">Welcome</h1>
+            <p class="text-indigo-200">Please sign in to continue</p>
+        </div>
+
+        <form method="post" class="space-y-6">
+            <div asp-validation-summary="ModelOnly" class="text-red-400 mb-4"></div>
+            
+            <div>
+                <label asp-for="Input.Email" class="block text-sm font-medium text-indigo-200 mb-2">Email Address</label>
+                <input asp-for="Input.Email"
+                       class="input-field w-full px-4 py-3 rounded-lg text-white placeholder-indigo-300"
+                       placeholder="name@example.com"
+                       autocomplete="email">
+                <span asp-validation-for="Input.Email" class="text-red-400 text-sm mt-1 block"></span>
+            </div>
+
+            <div>
+                <label asp-for="Input.Password" class="block text-sm font-medium text-indigo-200 mb-2">Password</label>
+                <input asp-for="Input.Password"
+                       class="input-field w-full px-4 py-3 rounded-lg text-white placeholder-indigo-300"
+                       placeholder="Enter your password"
+                       autocomplete="current-password">
+                <span asp-validation-for="Input.Password" class="text-red-400 text-sm mt-1 block"></span>
+            </div>
+
+            <button type="submit" 
+                    class="login-button w-full py-3 px-4 rounded-lg text-white font-semibold">
+                Sign In
+            </button>
+        </form>
+    </div>
+
+    <script>
+        function createSpark() {
+            const spark = document.createElement('div');
+            spark.className = 'tesla-spark';
+            
+            const size = Math.random() * 10 + 5;
+            spark.style.width = size + 'px';
+            spark.style.height = size + 'px';
+            
+            const container = document.getElementById('teslaContainer');
+            const x = Math.random() * container.offsetWidth;
+            const y = Math.random() * container.offsetHeight;
+            
+            spark.style.left = x + 'px';
+            spark.style.top = y + 'px';
+            
+            container.appendChild(spark);
+            
+            spark.addEventListener('animationend', () => {
+                spark.remove();
+            });
+        }
+
+        setInterval(createSpark, 200);
+    </script>
+</body>
+</html>

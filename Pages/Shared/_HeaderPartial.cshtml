@@ -1,0 +1,52 @@
+@using Microsoft.AspNetCore.Identity
+@inject UserManager<WebPepperCan.Data.ApplicationUser> UserManager
+@inject SignInManager<WebPepperCan.Data.ApplicationUser> SignInManager
+
+@{
+    var user = await UserManager.GetUserAsync(User);
+}
+
+<header class="bg-white shadow-sm">
+    <div class="flex justify-between items-center px-6 py-3">
+        <!-- Logo ve başlık -->
+        <div class="flex items-center space-x-4">
+            <img
+                src="/pepperlogo.png"
+                alt="Pepper Motion Logo"
+                class="w-24 h-8 object-contain"
+            />
+            <h1 class="text-xl font-semibold" style="color: #68b346">Fleet Management</h1>
+        </div>
+
+        <!-- Sağ taraftaki kullanıcı bilgileri ve çıkış butonu -->
+        <div class="flex items-center gap-4">
+            <div class="flex items-center gap-2">
+                <svg class="w-4 h-4 text-gray-400" viewBox="0 0 20 20" fill="green">
+                    <path d="M10 9a3 3 0 100-6 3 3 0 000 6zm-7 9a7 7 0 1114 0H3z"/>
+                </svg>
+                <span class="text-sm text-gray-600">
+                    @if (user != null)
+                    {
+                        @user.Email
+                    }
+                    else
+                    {
+                        <text>Giriş yapılmadı</text>
+                    }
+                </span>
+            </div>
+
+            <!-- Yeni çıkış butonu -->
+            <a href="/Account/Logout" 
+               class="flex items-center gap-2 px-3 py-1.5 text-sm text-gray-700 hover:text-red-600 
+                      rounded-lg hover:bg-red-50 transition-all duration-200 group">
+                <span class="font-medium">Çıkış Yap</span>
+                <svg class="w-4 h-4 transition-transform group-hover:translate-x-1" 
+                     fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" 
+                          d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+                </svg>
+            </a>
+        </div>
+    </div>
+</header> 

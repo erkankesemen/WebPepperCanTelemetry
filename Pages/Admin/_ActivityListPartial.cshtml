@@ -1,0 +1,29 @@
+@model IEnumerable<WebPepperCan.Data.UserActivity>
+
+@foreach (var activity in Model)
+{
+    <tr class="border-t hover:bg-gray-50">
+        <td class="py-2">
+            <div class="font-medium">@activity.User?.Name @activity.User?.LastName</div>
+            <div class="text-sm text-gray-500">@activity.User?.Email</div>
+        </td>
+        <td class="py-2">@activity.Description</td>
+        <td class="py-2">
+            <span class="px-2 py-1 text-xs rounded-full 
+                @(activity.ActivityType == "UserCreated" ? "bg-green-100 text-green-800" : 
+                  activity.ActivityType == "UserDeleted" ? "bg-red-100 text-red-800" : 
+                  activity.ActivityType == "UserUpdated" ? "bg-blue-100 text-blue-800" : 
+                  activity.ActivityType == "LoginFailed" ? "bg-yellow-100 text-yellow-800" : 
+                  "bg-gray-100 text-gray-800")">
+                @activity.ActivityType
+            </span>
+        </td>
+        <td class="py-2 text-sm">
+            @if (!string.IsNullOrEmpty(activity.IpAddress))
+            {
+                <span class="text-gray-600">@activity.IpAddress</span>
+            }
+        </td>
+        <td class="py-2 text-gray-500">@activity.CreatedAt.ToString("dd/MM/yyyy HH:mm")</td>
+    </tr>
+}

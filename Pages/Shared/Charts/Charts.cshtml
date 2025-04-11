@@ -1,0 +1,32 @@
+@{
+    ViewData["Title"] = "Grafikler";
+}
+
+
+
+<div class="flex">
+
+    <div class="flex-1 p-4">
+
+        <!-- Grafik Alanı -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div class="bg-white shadow-lg rounded-lg p-4">
+                <h2 class="text-lg font-semibold mb-2">Hız Grafiği</h2>
+                <canvas id="speedChart"></canvas>
+            </div>
+            <div class="bg-white shadow-lg rounded-lg p-4">
+                <h2 class="text-lg font-semibold mb-2">Gaz Pedalı Grafiği</h2>
+                <canvas id="accelerationChart"></canvas>
+            </div>
+            <div class="bg-white shadow-lg rounded-lg p-4">
+                <h2 class="text-lg font-semibold mb-2">Motor RPM Grafiği</h2>
+                <canvas id="motorRpmChart"></canvas>
+            </div>
+            <div class="bg-white shadow-lg rounded-lg p-4">
+                <h2 class="text-lg font-semibold mb-2">Batarya SOC Grafiği</h2>
+                <canvas id="socChart"></canvas>
+            </div>
+        </div>
+    </div>
+</div>
+

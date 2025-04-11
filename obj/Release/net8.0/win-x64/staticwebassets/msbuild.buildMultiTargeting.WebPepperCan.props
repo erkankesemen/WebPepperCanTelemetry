@@ -1,0 +1,3 @@
+﻿<Project>
+  <Import Project="..\build\WebPepperCan.props" />
+</Project>
