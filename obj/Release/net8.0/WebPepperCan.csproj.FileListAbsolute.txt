@@ -377,3 +377,4 @@ C:\Users\user\Desktop\WebPepperCan\WebPepperCan\obj\Release\net8.0\refint\WebPep
 C:\Users\user\Desktop\WebPepperCan\WebPepperCan\obj\Release\net8.0\WebPepperCan.pdb
 C:\Users\user\Desktop\WebPepperCan\WebPepperCan\obj\Release\net8.0\WebPepperCan.genruntimeconfig.cache
 C:\Users\user\Desktop\WebPepperCan\WebPepperCan\obj\Release\net8.0\ref\WebPepperCan.dll
+C:\Users\user\Desktop\WebPepperCan\WebPepperCan\obj\Release\net8.0\WebPepperCan.sourcelink.json

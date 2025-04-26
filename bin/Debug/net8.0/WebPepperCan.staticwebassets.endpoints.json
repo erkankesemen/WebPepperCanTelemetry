@@ -1315,6 +1315,51 @@
       ]
     },
     {
+      "Route": "js/vehicleDetails.4np86xkhjr.js",
+      "AssetFile": "js/vehicleDetails.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "22632"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"0J09vglnlkYoBlWdVD/iKioVzJKor431tDZCaKRllCo=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 22 Apr 2025 06:49:20 GMT"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "4np86xkhjr"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-0J09vglnlkYoBlWdVD/iKioVzJKor431tDZCaKRllCo="
+        },
+        {
+          "Name": "label",
+          "Value": "js/vehicleDetails.js"
+        }
+      ]
+    },
+    {
       "Route": "js/vehicleDetails.js",
       "AssetFile": "js/vehicleDetails.js",
       "Selectors": [],
@@ -1329,7 +1374,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "28328"
+          "Value": "22632"
         },
         {
           "Name": "Content-Type",
@@ -1337,62 +1382,17 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"+RujuN5+8jP1WHCAjbH+RAYUvVMP9BAfxroo75ThzqU=\""
+          "Value": "\"0J09vglnlkYoBlWdVD/iKioVzJKor431tDZCaKRllCo=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 11 Apr 2025 11:21:35 GMT"
+          "Value": "Tue, 22 Apr 2025 06:49:20 GMT"
         }
       ],
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-+RujuN5+8jP1WHCAjbH+RAYUvVMP9BAfxroo75ThzqU="
-        }
-      ]
-    },
-    {
-      "Route": "js/vehicleDetails.via777xvbh.js",
-      "AssetFile": "js/vehicleDetails.js",
-      "Selectors": [],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "max-age=31536000, immutable"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "28328"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "text/javascript"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"+RujuN5+8jP1WHCAjbH+RAYUvVMP9BAfxroo75ThzqU=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Fri, 11 Apr 2025 11:21:35 GMT"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "fingerprint",
-          "Value": "via777xvbh"
-        },
-        {
-          "Name": "integrity",
-          "Value": "sha256-+RujuN5+8jP1WHCAjbH+RAYUvVMP9BAfxroo75ThzqU="
-        },
-        {
-          "Name": "label",
-          "Value": "js/vehicleDetails.js"
+          "Value": "sha256-0J09vglnlkYoBlWdVD/iKioVzJKor431tDZCaKRllCo="
         }
       ]
     },

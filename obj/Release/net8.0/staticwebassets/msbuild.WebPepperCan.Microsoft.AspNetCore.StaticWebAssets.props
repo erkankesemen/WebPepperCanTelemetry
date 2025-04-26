@@ -282,8 +282,8 @@
       <RelatedAsset></RelatedAsset>
       <AssetTraitName></AssetTraitName>
       <AssetTraitValue></AssetTraitValue>
-      <Fingerprint>via777xvbh</Fingerprint>
-      <Integrity>+RujuN5+8jP1WHCAjbH+RAYUvVMP9BAfxroo75ThzqU=</Integrity>
+      <Fingerprint>kqrl3nl2m7</Fingerprint>
+      <Integrity>VBEkVenWVTvvcFPkCsucv0FAhJ0TMITYObzzcIJD8ho=</Integrity>
       <CopyToOutputDirectory>Never</CopyToOutputDirectory>
       <CopyToPublishDirectory>PreserveNewest</CopyToPublishDirectory>
       <OriginalItemSpec>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\js\vehicleDetails.js'))</OriginalItemSpec>

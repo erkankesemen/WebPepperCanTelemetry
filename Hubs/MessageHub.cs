@@ -91,6 +91,7 @@ namespace WebPepperCan.Hubs
                 {
                     deviceId = data.DeviceId,
                     speed = data.Speed,
+                    brake= data.BrakePct,
                     accelPct = data.AccelPct,
                     timestamp = DateTime.Now.ToString("HH:mm:ss.fff"),
                     latitude = data.Latitude,
@@ -222,5 +223,6 @@ namespace WebPepperCan.Hubs
         public double Speed { get; set; }
         public double AccelPct { get; set; }
         public bool HasCanData { get; set; }
+        public bool BrakePct { get; set; }
     }
 }

@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "uECVE6veOH6cpPLc5KZfh/A4h8JhASZhkkAKFK6XaXc=",
+  "Hash": "/8bbl0FWooB8wLmHCxyJFYSWr0bwjXtQMPdc4wiMynM=",
   "Source": "WebPepperCan",
   "BasePath": "_content/WebPepperCan",
   "Mode": "Default",
@@ -388,8 +388,8 @@
       "RelatedAsset": "",
       "AssetTraitName": "",
       "AssetTraitValue": "",
-      "Fingerprint": "via777xvbh",
-      "Integrity": "+RujuN5+8jP1WHCAjbH+RAYUvVMP9BAfxroo75ThzqU=",
+      "Fingerprint": "4np86xkhjr",
+      "Integrity": "0J09vglnlkYoBlWdVD/iKioVzJKor431tDZCaKRllCo=",
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\js\\vehicleDetails.js"
@@ -2908,6 +2908,51 @@
       ]
     },
     {
+      "Route": "js/vehicleDetails.4np86xkhjr.js",
+      "AssetFile": "C:\\Users\\user\\Desktop\\WebPepperCan\\WebPepperCan\\wwwroot\\js\\vehicleDetails.js",
+      "Selectors": [],
+      "ResponseHeaders": [
+        {
+          "Name": "Accept-Ranges",
+          "Value": "bytes"
+        },
+        {
+          "Name": "Content-Length",
+          "Value": "22632"
+        },
+        {
+          "Name": "Content-Type",
+          "Value": "text/javascript"
+        },
+        {
+          "Name": "ETag",
+          "Value": "\"0J09vglnlkYoBlWdVD/iKioVzJKor431tDZCaKRllCo=\""
+        },
+        {
+          "Name": "Last-Modified",
+          "Value": "Tue, 22 Apr 2025 06:49:20 GMT"
+        },
+        {
+          "Name": "Cache-Control",
+          "Value": "max-age=31536000, immutable"
+        }
+      ],
+      "EndpointProperties": [
+        {
+          "Name": "fingerprint",
+          "Value": "4np86xkhjr"
+        },
+        {
+          "Name": "label",
+          "Value": "js/vehicleDetails.js"
+        },
+        {
+          "Name": "integrity",
+          "Value": "sha256-0J09vglnlkYoBlWdVD/iKioVzJKor431tDZCaKRllCo="
+        }
+      ]
+    },
+    {
       "Route": "js/vehicleDetails.js",
       "AssetFile": "C:\\Users\\user\\Desktop\\WebPepperCan\\WebPepperCan\\wwwroot\\js\\vehicleDetails.js",
       "Selectors": [],
@@ -2918,7 +2963,7 @@
         },
         {
           "Name": "Content-Length",
-          "Value": "28328"
+          "Value": "22632"
         },
         {
           "Name": "Content-Type",
@@ -2926,11 +2971,11 @@
         },
         {
           "Name": "ETag",
-          "Value": "\"+RujuN5+8jP1WHCAjbH+RAYUvVMP9BAfxroo75ThzqU=\""
+          "Value": "\"0J09vglnlkYoBlWdVD/iKioVzJKor431tDZCaKRllCo=\""
         },
         {
           "Name": "Last-Modified",
-          "Value": "Fri, 11 Apr 2025 11:21:35 GMT"
+          "Value": "Tue, 22 Apr 2025 06:49:20 GMT"
         },
         {
           "Name": "Cache-Control",
@@ -2940,52 +2985,7 @@
       "EndpointProperties": [
         {
           "Name": "integrity",
-          "Value": "sha256-+RujuN5+8jP1WHCAjbH+RAYUvVMP9BAfxroo75ThzqU="
-        }
-      ]
-    },
-    {
-      "Route": "js/vehicleDetails.via777xvbh.js",
-      "AssetFile": "C:\\Users\\user\\Desktop\\WebPepperCan\\WebPepperCan\\wwwroot\\js\\vehicleDetails.js",
-      "Selectors": [],
-      "ResponseHeaders": [
-        {
-          "Name": "Accept-Ranges",
-          "Value": "bytes"
-        },
-        {
-          "Name": "Content-Length",
-          "Value": "28328"
-        },
-        {
-          "Name": "Content-Type",
-          "Value": "text/javascript"
-        },
-        {
-          "Name": "ETag",
-          "Value": "\"+RujuN5+8jP1WHCAjbH+RAYUvVMP9BAfxroo75ThzqU=\""
-        },
-        {
-          "Name": "Last-Modified",
-          "Value": "Fri, 11 Apr 2025 11:21:35 GMT"
-        },
-        {
-          "Name": "Cache-Control",
-          "Value": "max-age=31536000, immutable"
-        }
-      ],
-      "EndpointProperties": [
-        {
-          "Name": "fingerprint",
-          "Value": "via777xvbh"
-        },
-        {
-          "Name": "label",
-          "Value": "js/vehicleDetails.js"
-        },
-        {
-          "Name": "integrity",
-          "Value": "sha256-+RujuN5+8jP1WHCAjbH+RAYUvVMP9BAfxroo75ThzqU="
+          "Value": "sha256-0J09vglnlkYoBlWdVD/iKioVzJKor431tDZCaKRllCo="
         }
       ]
     },

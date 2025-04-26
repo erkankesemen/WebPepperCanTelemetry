@@ -87,6 +87,7 @@ namespace WebPepperCan.Pages
                     Id = vehicle.Id,
                     Location = vehicle.Location ?? "Konum bilgisi yok",
                     LastActive = vehicle.TelemetryDevice.LastCommunication?.ToString("dd.MM.yyyy HH:mm:ss") ?? "n/a",
+                     DisplayName = $"{vehicle.Plaka} / {vehicle.TelemetryDevice?.SerialNumber}",
                     VehicleSpeed = "0 km/h",
                     EngineSpeed = "n/a",
                     FuelLevel = "n/a",

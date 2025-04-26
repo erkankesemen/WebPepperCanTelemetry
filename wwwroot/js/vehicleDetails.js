@@ -12,10 +12,11 @@ let selectedDeviceId = null; // Seçili aracın device ID'si
 let currentSpeed = 0; // Mevcut hız
 let currentAccelPct = 0; // Mevcut ivme yüzdesi
 let currentSoc = 0; // Mevcut batarya yüzdesi
-let lastSpeed = null; // Son hız verisi
-let lastAccelPct = null; // Son ivme verisi
-let lastMotorRpm = null; // Son motor RPM verisi
-let lastSoc = null; // Son batarya SOC verisi
+let lastSpeed = null;
+let lastAccelPct = null;
+let lastBrakePct = null;
+let lastMotorRpm = null;
+let lastSoc = null;
  
  
 // Global olarak ikon tanımlaması
@@ -161,9 +162,11 @@ async function initializeSignalR() {
                     updateMetrics({
                         speed: data.Speed,
                         accelPct: data.AccelerationPercentage,
-                        SOC: data.SOC,
-                        MotorRpm: data.MotorRpm
+                        brakePct: data.BrakePercentage,
+                        MotorRpm: data.MotorRpm,
+                        SOC: data.SOC
                     });
+                    
 
                     // Tablodaki metrik verilerini güncelle
                     updateMetricsTable(data);
@@ -180,9 +183,11 @@ async function initializeSignalR() {
             updateMetrics({
                 speed: data.Speed,
                 accelPct: data.AccelerationPercentage,
-                SOC: data.SOC,
-                MotorRpm: data.MotorRpm
+                brakePct: data.Brake,
+                MotorRpm: data.MotorRpm,
+                SOC: data.SOC
             });
+            
 
             // Tablodaki metrik verilerini güncelle
             updateMetricsTable(data);
@@ -283,101 +288,49 @@ function updateConnectionStatus(text, className) {
     
     statusDiv.className = `px-3 py-1 rounded-full text-white text-xs ${status.class} w-24 flex items-center justify-center gap-2`;
 }
-
 function updateMetrics(data) {
-    // Speed metriğini güncelle
-    const speedMetric = document.querySelector('#metricsContainer > div:first-child');
-    if (speedMetric) {
-        const speedValue = speedMetric.querySelector('.text-lg');
-        const speedCircle = speedMetric.querySelector('circle.progress');
+    if (typeof data.speed !== 'undefined') lastSpeed = data.speed;
+    if (typeof data.accelPct !== 'undefined') lastAccelPct = data.accelPct;
+    if (typeof data.brakePct !== 'undefined') lastBrakePct = data.brakePct;
+    if (typeof data.MotorRpm !== 'undefined') lastMotorRpm = data.MotorRpm;
+    if (typeof data.SOC !== 'undefined') lastSoc = data.SOC;
 
-        if (typeof data.speed !== 'undefined') {
-            lastSpeed = data.speed; // Yeni hız verisi varsa güncelle
-        }
+    updateGauge('speed', lastSpeed, 180);
+    updateGauge('acceleration', lastAccelPct, 100);
+    updateGauge('brake', lastBrakePct, 100);
+    updateGauge('rpm', lastMotorRpm, 3000);
+    updateGauge('battery', lastSoc, 100);
+}
 
-        // Hız değerini göster
-        speedValue.textContent = lastSpeed !== null ? Math.round(lastSpeed) : 'Veri Yok';
 
-        // Dairesel gösterim hesaplamaları
-        if (speedCircle) {
-            const speedPercentage = (lastSpeed !== null ? lastSpeed : 0) / 180 * 100; // 180 km/h max hız
-            const circumference = 2 * Math.PI * 36;
-            speedCircle.style.strokeDasharray = circumference;
-            const offset = circumference * (1 - speedPercentage / 100);
-            speedCircle.style.strokeDashoffset = offset;
-        }
+
+function updateGauge(metricKey, value, maxValue) {
+    const container = document.querySelector(`[data-metric="${metricKey}"]`);
+    if (!container) {
+        console.warn(`Container for '${metricKey}' not found`);
+        return;
     }
 
-    // AccelPct metriğini güncelle
-    const accelMetric = document.querySelector('#metricsContainer > div:nth-child(2)');
-    if (accelMetric) {
-        const accelValue = accelMetric.querySelector('.text-lg');
-        const accelCircle = accelMetric.querySelector('circle.progress');
 
-        if (typeof data.accelPct !== 'undefined') {
-            lastAccelPct = data.accelPct; // Yeni ivme verisi varsa güncelle
-        }
+    const valueElement = container.querySelector('.text-lg');
+    const progressCircle = container.querySelector('circle.progress');
 
-        // İvme değerini göster
-        accelValue.textContent = lastAccelPct !== null ? Math.round(lastAccelPct) : 'Veri Yok';
+    const displayValue = value !== null ? Math.round(value) : 'Veri Yok';
+    const percent = value !== null ? (value / maxValue) * 100 : 0;
+    const circumference = 2 * Math.PI * 36;
+    const offset = circumference * (1 - percent / 100);
 
-        // Dairesel gösterim hesaplamaları
-        if (accelCircle) {
-            const accelPercentage = lastAccelPct !== null ? lastAccelPct : 0; // Zaten yüzde olarak geliyor
-            const circumference = 2 * Math.PI * 36;
-            accelCircle.style.strokeDasharray = circumference;
-            const offset = circumference * (1 - accelPercentage / 100);
-            accelCircle.style.strokeDashoffset = offset;
-        }
-    }
-
-    // Motor RPM metriğini güncelle
-    const motorRPMMetric = document.querySelector('#metricsContainer > div:nth-child(3)');
-    if (motorRPMMetric) {
-        const motorRPMValue = motorRPMMetric.querySelector('.text-lg');
-        const motorRPMCircle = motorRPMMetric.querySelector('circle.progress');
-        
-        if (typeof data.MotorRpm !== 'undefined') {
-            lastMotorRpm = data.MotorRpm; // Yeni motor RPM verisi varsa güncelle
-        }
-
-        // Motor RPM değerini göster
-        motorRPMValue.textContent = lastMotorRpm !== null ? Math.round(lastMotorRpm) : 'Veri Yok';
-        
-        // Dairesel gösterim hesaplamaları
-        if (motorRPMCircle) {
-            const maxMotorRpm = 3000; // Maksimum RPM değeri
-            const motorRpmValue = lastMotorRpm !== null ? lastMotorRpm : 0; // 0 ile 3000 arasında bir değer
-            const circumference = 2 * Math.PI * 36;
-            motorRPMCircle.style.strokeDasharray = circumference;
-            const offset = circumference * (1 - (motorRpmValue / maxMotorRpm));
-            motorRPMCircle.style.strokeDashoffset = offset;
-        }
-    }
-
-    // Batarya yüzdesi metriğini güncelle
-    const socMetric = document.querySelector('#metricsContainer > div:nth-child(4)');
-    if (socMetric) {
-        const socValue = socMetric.querySelector('.text-lg');
-        const socCircle = socMetric.querySelector('circle.progress');
-
-        if (typeof data.SOC !== 'undefined') {
-            lastSoc = data.SOC; // Yeni batarya yüzdesi varsa güncelle
-        }
-
-        // Batarya yüzdesini göster
-        socValue.textContent = lastSoc !== null ? Math.round(lastSoc) : 'Veri Yok';
-
-        // Dairesel gösterim hesaplamaları
-        if (socCircle) {
-            const socPercentage = (lastSoc !== null ? lastSoc : 0) / 100 * 100; // 100% max batarya
-            const circumference = 2 * Math.PI * 36;
-            socCircle.style.strokeDasharray = circumference;
-            const offset = circumference * (1 - socPercentage / 100);
-            socCircle.style.strokeDashoffset = offset;
-        }
+    if (valueElement) valueElement.textContent = displayValue;
+    if (progressCircle) {
+        progressCircle.style.strokeDasharray = circumference;
+        progressCircle.style.strokeDashoffset = offset;
     }
 }
+
+
+
+
+
 
 function initializeMap() {
     const defaultLocation = [39.793629, 32.432211];
@@ -466,82 +419,10 @@ function updateVehicleMarker(vehicleId, latitude, longitude) {
 }
 
 function resetMetrics() {
-    // Speed metriğini sıfırla
-    const speedMetric = document.querySelector('#metricsContainer > div:first-child');
-    if (speedMetric) {
-        const speedCircle = speedMetric.querySelector('circle.progress');
-        const speedValue = speedMetric.querySelector('.text-lg');
-        
-        if (speedCircle && speedValue) {
-            const circumference = 2 * Math.PI * 36;
-            speedCircle.style.strokeDashoffset = circumference; // Tam daire = boş
-            speedValue.textContent = '0';
-        }
-    }
-
-    // AccelPct metriğini sıfırla
-    const accelMetric = document.querySelector('#metricsContainer > div:nth-child(2)');
-    if (accelMetric) {
-        const accelCircle = accelMetric.querySelector('circle.progress');
-        const accelValue = accelMetric.querySelector('.text-lg');
-        
-        if (accelCircle && accelValue) {
-            const circumference = 2 * Math.PI * 36;
-            accelCircle.style.strokeDashoffset = circumference; // Tam daire = boş
-            accelValue.textContent = '0';
-        }
-        const motorRPMMetric = document.querySelector('#metricsContainer > div:nth-child(3)');
-        if (motorRPMMetric) {
-            const motorRPMValue = motorRPMMetric.querySelector('.text-lg');
-            const motorRPMCircle = motorRPMMetric.querySelector('circle.progress');
-            
-            if (motorRPMCircle && motorRPMValue) {
-                const circumference = 2 * Math.PI * 36;
-                motorRPMCircle.style.strokeDashoffset = circumference;
-                motorRPMValue.textContent = '0';
-            }
-        }
-
-        const socmetric = document.querySelector('#metricsContainer > div:nth-child(4)');
-        if (socmetric) {
-            const socvalue = socmetric.querySelector('.text-lg');
-            const soccircle = socmetric.querySelector('circle.progress');
-            
-            if (soccircle && socvalue) {
-                const circumference = 2 * Math.PI * 36;
-                soccircle.style.strokeDashoffset = circumference;
-                socvalue.textContent = '0';
-            }
-
-        }
-    }
-
-    // Temperature metriğini sıfırla (varsa)
-    const tempMetric = document.querySelector('#metricsContainer > div:nth-child(3)');
-    if (tempMetric) {
-        const tempCircle = tempMetric.querySelector('circle.progress');
-        const tempValue = tempMetric.querySelector('.text-lg');
-        
-        if (tempCircle && tempValue) {
-            const circumference = 2 * Math.PI * 36;
-            tempCircle.style.strokeDashoffset = circumference;
-            tempValue.textContent = '0';
-        }
-    }
-
-    // Battery metriğini sıfırla (varsa)
-    const batteryMetric = document.querySelector('#metricsContainer > div:nth-child(4)');
-    if (batteryMetric) {
-        const batteryCircle = batteryMetric.querySelector('circle.progress');
-        const batteryValue = batteryMetric.querySelector('.text-lg');
-        
-        if (batteryCircle && batteryValue) {
-            const circumference = 2 * Math.PI * 36;
-            batteryCircle.style.strokeDashoffset = circumference;
-            batteryValue.textContent = '0';
-        }
-    }
+    const keys = ['speed', 'acceleration', 'brake', 'rpm', 'battery'];
+    keys.forEach(k => updateGauge(k, 0, 100));
 }
+
 
 function focusVehicle(vehicleId) {
     selectedVehicleId = vehicleId;

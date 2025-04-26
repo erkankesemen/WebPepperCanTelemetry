@@ -388,3 +388,13 @@ C:\Users\user\Desktop\WebPepperCan\WebPepperCan\obj\Debug\net8.0\refint\WebPeppe
 C:\Users\user\Desktop\WebPepperCan\WebPepperCan\obj\Debug\net8.0\WebPepperCan.pdb
 C:\Users\user\Desktop\WebPepperCan\WebPepperCan\obj\Debug\net8.0\WebPepperCan.genruntimeconfig.cache
 C:\Users\user\Desktop\WebPepperCan\WebPepperCan\obj\Debug\net8.0\ref\WebPepperCan.dll
+C:\Users\user\Desktop\WebPepperCan\WebPepperCan\obj\Debug\net8.0\WebPepperCan.sourcelink.json
+C:\Users\user\Desktop\WebPepperCan\WebPepperCan\bin\Debug\net8.0\publish\Web.config
+C:\Users\user\Desktop\WebPepperCan\WebPepperCan\bin\Debug\net8.0\publish\appsettings.Development.json
+C:\Users\user\Desktop\WebPepperCan\WebPepperCan\bin\Debug\net8.0\publish\appsettings.json
+C:\Users\user\Desktop\WebPepperCan\WebPepperCan\bin\Debug\net8.0\publish\libman.json
+C:\Users\user\Desktop\WebPepperCan\WebPepperCan\bin\Debug\net8.0\publish\package-lock.json
+C:\Users\user\Desktop\WebPepperCan\WebPepperCan\bin\Debug\net8.0\publish\package.json
+C:\Users\user\Desktop\WebPepperCan\WebPepperCan\bin\Debug\net8.0\publish\WebPepperCan.deps.json
+C:\Users\user\Desktop\WebPepperCan\WebPepperCan\bin\Debug\net8.0\publish\WebPepperCan.runtimeconfig.json
+C:\Users\user\Desktop\WebPepperCan\WebPepperCan\bin\Debug\net8.0\publish\WebPepperCan.staticwebassets.endpoints.json

@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("WebPepperCan")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+c7cf2f14caf6c947b4bdaac25ea2557fae71321b")]
 [assembly: System.Reflection.AssemblyProductAttribute("WebPepperCan")]
 [assembly: System.Reflection.AssemblyTitleAttribute("WebPepperCan")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

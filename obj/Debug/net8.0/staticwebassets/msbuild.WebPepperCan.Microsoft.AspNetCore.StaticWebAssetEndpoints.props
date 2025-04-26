@@ -180,17 +180,17 @@
       <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-bf8SXL3wEjNsk2AcQrZyVEyqssE9VCtLq81Gtj0NZZY="}]]]></EndpointProperties>
       <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"7724"},{"Name":"Content-Type","Value":"text/javascript"},{"Name":"ETag","Value":"\u0022bf8SXL3wEjNsk2AcQrZyVEyqssE9VCtLq81Gtj0NZZY=\u0022"},{"Name":"Last-Modified","Value":"Tue, 25 Feb 2025 13:53:34 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
+    <StaticWebAssetEndpoint Include="_content/WebPepperCan/js/vehicleDetails.4np86xkhjr.js">
+      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\js\vehicleDetails.js'))</AssetFile>
+      <Selectors><![CDATA[[]]]></Selectors>
+      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"4np86xkhjr"},{"Name":"integrity","Value":"sha256-0J09vglnlkYoBlWdVD/iKioVzJKor431tDZCaKRllCo="},{"Name":"label","Value":"_content/WebPepperCan/js/vehicleDetails.js"}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"22632"},{"Name":"Content-Type","Value":"text/javascript"},{"Name":"ETag","Value":"\u00220J09vglnlkYoBlWdVD/iKioVzJKor431tDZCaKRllCo=\u0022"},{"Name":"Last-Modified","Value":"Tue, 22 Apr 2025 06:49:20 GMT"}]]]></ResponseHeaders>
+    </StaticWebAssetEndpoint>
     <StaticWebAssetEndpoint Include="_content/WebPepperCan/js/vehicleDetails.js">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\js\vehicleDetails.js'))</AssetFile>
       <Selectors><![CDATA[[]]]></Selectors>
-      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-\u002BRujuN5\u002B8jP1WHCAjbH\u002BRAYUvVMP9BAfxroo75ThzqU="}]]]></EndpointProperties>
-      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"28328"},{"Name":"Content-Type","Value":"text/javascript"},{"Name":"ETag","Value":"\u0022\u002BRujuN5\u002B8jP1WHCAjbH\u002BRAYUvVMP9BAfxroo75ThzqU=\u0022"},{"Name":"Last-Modified","Value":"Fri, 11 Apr 2025 11:21:35 GMT"}]]]></ResponseHeaders>
-    </StaticWebAssetEndpoint>
-    <StaticWebAssetEndpoint Include="_content/WebPepperCan/js/vehicleDetails.via777xvbh.js">
-      <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\js\vehicleDetails.js'))</AssetFile>
-      <Selectors><![CDATA[[]]]></Selectors>
-      <EndpointProperties><![CDATA[[{"Name":"fingerprint","Value":"via777xvbh"},{"Name":"integrity","Value":"sha256-\u002BRujuN5\u002B8jP1WHCAjbH\u002BRAYUvVMP9BAfxroo75ThzqU="},{"Name":"label","Value":"_content/WebPepperCan/js/vehicleDetails.js"}]]]></EndpointProperties>
-      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"max-age=31536000, immutable"},{"Name":"Content-Length","Value":"28328"},{"Name":"Content-Type","Value":"text/javascript"},{"Name":"ETag","Value":"\u0022\u002BRujuN5\u002B8jP1WHCAjbH\u002BRAYUvVMP9BAfxroo75ThzqU=\u0022"},{"Name":"Last-Modified","Value":"Fri, 11 Apr 2025 11:21:35 GMT"}]]]></ResponseHeaders>
+      <EndpointProperties><![CDATA[[{"Name":"integrity","Value":"sha256-0J09vglnlkYoBlWdVD/iKioVzJKor431tDZCaKRllCo="}]]]></EndpointProperties>
+      <ResponseHeaders><![CDATA[[{"Name":"Accept-Ranges","Value":"bytes"},{"Name":"Cache-Control","Value":"no-cache"},{"Name":"Content-Length","Value":"22632"},{"Name":"Content-Type","Value":"text/javascript"},{"Name":"ETag","Value":"\u00220J09vglnlkYoBlWdVD/iKioVzJKor431tDZCaKRllCo=\u0022"},{"Name":"Last-Modified","Value":"Tue, 22 Apr 2025 06:49:20 GMT"}]]]></ResponseHeaders>
     </StaticWebAssetEndpoint>
     <StaticWebAssetEndpoint Include="_content/WebPepperCan/js/vehicleManagement.9o74absduu.js">
       <AssetFile>$([System.IO.Path]::GetFullPath('$(MSBuildThisFileDirectory)..\staticwebassets\js\vehicleManagement.js'))</AssetFile>

@@ -36,10 +36,10 @@ tbody tr:hover {
         <!-- Sol sidebar - Araç listesi -->
         <div class="w-[300px] bg-white border-r flex flex-col">
             <div class="p-4 border-b">
-                <h2 class="text-lg font-medium mb-4">VEHICLES</h2>
+                <h2 class="text-lg font-medium mb-4">Araçlar</h2>
                 <div class="flex gap-2">
                     <div class="flex-1 relative">
-                        <input type="text" placeholder="Search" class="w-full pl-3 pr-10 py-2 border rounded-lg">
+                        <input type="text" placeholder="" class="w-full pl-3 pr-10 py-2 border rounded-lg">
                         <button class="absolute right-3 top-1/2 transform -translate-y-1/2">
                             <svg class="w-4 h-4 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
@@ -93,7 +93,7 @@ tbody tr:hover {
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
                             d="M10 19l-7-7m0 0l7-7m-7 7h18" />
                     </svg>
-                    Go back to fleets
+                    Filo Listesi
                 </a>
             </div>
         </div>
@@ -104,7 +104,7 @@ tbody tr:hover {
             <div class="bg-white p-4 m-4 rounded-lg shadow-lg">
                 <!-- Butonlar ve Bağlantı Durumu -->
                 <div class="flex flex-wrap items-center justify-between mb-6">
-                    <h2 class="text-lg font-medium text-gray-700">Metrics</h2>
+                    <h2 class="text-lg font-medium text-gray-700">Araç Verileri</h2>
                     <div class="flex flex-col sm:flex-row items-center justify-center gap-3">
                         <!-- This is the connectionState div -->
                         <div id="connectionState"
@@ -116,20 +116,18 @@ tbody tr:hover {
                         <div class="flex gap-2">
                             <button onclick="setView('map')" id="mapButton"
                                 class="px-4 py-2 rounded-lg bg-blue-600 text-white">
-                                Map
+                                Harita
                             </button>
                             <button onclick="setView('signals')" id="signalsButton"
                                 class="px-4 py-2 rounded-lg bg-gray-100 text-gray-600 hover:bg-gray-200">
-                                Signals
+                                Sinyaller
                             </button>
                         </div>
                     </div>
                 </div>
-
-
                 <!-- Metrikler -->
-                <div class="flex flex-wrap justify-center gap-8" id="metricsContainer">
-                    <div class="flex flex-col items-center">
+                <div class="flex justify-center gap-4 flex-wrap md:flex-nowrap" id="metricsContainer">
+                    <div class="flex flex-col items-center w-20" data-metric="speed">
                         <div class="metric-circle relative">
                             <svg width="80" height="80">
                                 <circle class="background" cx="40" cy="40" r="36" fill="none" stroke="#e5e7eb"
@@ -144,10 +142,9 @@ tbody tr:hover {
                                 <div class="text-lg font-semibold">0</div>
                             </div>
                         </div>
-                        <div class="mt-2 text-sm font-medium text-center">Speed (km/h)</div>
+                        <div class="mt-2 text-sm font-medium text-center">Hız (km/h)</div>
                     </div>
-
-                    <div class="flex flex-col items-center">
+                    <div class="flex flex-col items-center" data-metric="acceleration">
                         <div class="metric-circle relative">
                             <svg width="80" height="80">
                                 <circle class="background" cx="40" cy="40" r="36" fill="none" stroke="#e5e7eb"
@@ -162,11 +159,29 @@ tbody tr:hover {
                                 <div class="text-lg font-semibold">0</div>
                             </div>
                         </div>
-                        <div class="mt-2 text-sm font-medium text-center">Acceleration (%)</div>
+                        <div class="mt-2 text-sm font-medium text-center">Gaz Pedalı (%)</div>
                     </div>
 
 
-                    <div class="flex flex-col items-center">
+                    <div class="flex flex-col items-center" data-metric="brake">
+                        <div class="metric-circle relative">
+                            <svg width="80" height="80">
+                                <circle class="background" cx="40" cy="40" r="36" fill="none" stroke="#e5e7eb"
+                                    stroke-width="8"></circle>
+                                <circle class="progress" cx="40" cy="40" r="36" fill="none" stroke="#3b82f6"
+                                    stroke-width="8" stroke-linecap="round" stroke-dasharray="226.1946710584651"
+                                    stroke-dashoffset="226.195"
+                                    style="transition: stroke-dashoffset 0.5s ease-in-out; stroke-dashoffset: 226.195;">
+                                </circle>
+                            </svg>
+                            <div class="absolute inset-0 flex items-center justify-center">
+                                <div class="text-lg font-semibold">0</div>
+                            </div>
+                        </div>
+                        <div class="mt-2 text-sm font-medium text-center">Fren Pedalı (%)</div>
+                    </div>
+
+                    <div class="flex flex-col items-center" data-metric="rpm">
                         <div class="metric-circle relative">
                             <svg width="80" height="80">
                                 <circle class="background" cx="40" cy="40" r="36" fill="none" stroke="#e5e7eb"
@@ -185,7 +200,7 @@ tbody tr:hover {
                     </div>
 
 
-                    <div class="flex flex-col items-center">
+                    <div class="flex flex-col items-center" data-metric="battery">
                         <div class="metric-circle relative">
                             <svg width="80" height="80">
                                 <circle class="background" cx="40" cy="40" r="36" fill="none" stroke="#e5e7eb"
@@ -200,10 +215,8 @@ tbody tr:hover {
                                 <div class="text-lg font-semibold">0</div>
                             </div>
                         </div>
-                        <div class="mt-2 text-sm font-medium text-center">Battery (%)</div>
+                        <div class="mt-2 text-sm font-medium text-center">Batarya (%)</div>
                     </div>
-
-
                 </div>
             </div>
 
